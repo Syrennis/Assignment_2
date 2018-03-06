@@ -20,7 +20,7 @@ precip_wo_na <- precip[complete.cases(precip), ]
 temp_wo_na <- temp[complete.cases(temp), ]
 ```
 
-```{r Aggregate}
+```{r Aggregation}
 year = precip_wo_na$year
 name = precip_wo_na$name
 lat = precip_wo_na$lat
