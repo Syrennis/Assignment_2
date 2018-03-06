@@ -1,0 +1,31 @@
+---
+title: "Chrisler_Assignment_2"
+author: "Brett Chrisler"
+date: "March 5, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r readRDS provided<-TRUE}
+precip <- readRDS("USAAnnualPcpn1950_2008.rds")
+temp <- readRDS("USAAnnualTemp1950_2008.rds")
+```
+```{r Remove NA values}
+precip_wo_na <- precip[complete.cases(precip), ]
+temp_wo_na <- temp[complete.cases(temp), ]
+```
+
+```{r Aggregate}
+year = precip_wo_na$year
+name = precip_wo_na$name
+lat = precip_wo_na$lat
+lon = precip_wo_na$lon
+precip_agg <- aggregate(year ~ lat+lon+name, data = precip_wo_na, FUN=length)
+```
+
+
