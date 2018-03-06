@@ -16,16 +16,20 @@ precip <- readRDS("USAAnnualPcpn1950_2008.rds")
 temp <- readRDS("USAAnnualTemp1950_2008.rds")
 ```
 ```{r Remove NA values}
-precip_wo_na <- precip[complete.cases(precip), ]
-temp_wo_na <- temp[complete.cases(temp), ]
+#p for precip and t for temperature
+p <- precip[complete.cases(precip), ]
+t <- temp[complete.cases(temp), ]
 ```
 
 ```{r Aggregation}
-year = precip_wo_na$year
-name = precip_wo_na$name
-lat = precip_wo_na$lat
-lon = precip_wo_na$lon
-precip_agg <- aggregate(year ~ lat+lon+name, data = precip_wo_na, FUN=length)
+p_agg <- aggregate(year ~ lat+lon+name, data = p, FUN=length)
+t_agg <- aggregate(year ~ lat+lon+name, data = t, FUN=length)
+
 ```
 
+```{r 40 years}
+min = 40
+p_agg <- subset(p_agg, year >= min)
+t_agg <- subset(t_agg, year >= min)
 
+```
