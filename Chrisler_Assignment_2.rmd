@@ -38,8 +38,7 @@ p_filt <- merge(p,p_agg, by=c("lat","lon","name"))
 t_filt <- merge(t,t_agg, by=c("lat","lon","name"))
 ```
 
-```{r Sort by location}
-for(i in p_filt) {
+
   
   
 ```
