@@ -14,31 +14,40 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r readRDS provided<-TRUE}
 precip <- readRDS("USAAnnualPcpn1950_2008.rds")
 temp <- readRDS("USAAnnualTemp1950_2008.rds")
+
 ```
 
 ```{r Remove NA values}
 #p for precip and t for temperature
-p <- precip[complete.cases(precip), ]
-t <- temp[complete.cases(temp), ]
+df.list <- list(precip,temp)
+nans <- lapply(df.list, function(x) x[complete.cases(x),])
 ```
 
 ```{r Aggregation}
-p_agg <- aggregate(year ~ lat+lon+name, p, FUN=length)
-t_agg <- aggregate(year ~ lat+lon+name, t, FUN=length)
+agg <- lapply(nans, function(x) aggregate(year ~ lat+lon+name, x, FUN=length))
 ```
 
 ```{r Minimum amout of years}
 min = 40
-p_agg <- subset(p_agg, year >= min)
-t_agg <- subset(t_agg, year >= min)
+vars <- c("lat","lon","name")
+subset <- lapply(agg, function(x) subset(x, year >= min))
+filt <- lapply(subset, function(x) unique(x[vars]))
 ```
 
 ```{r Data for stations left}
-p_filt <- merge(p,p_agg, by=c("lat","lon","name"))
-t_filt <- merge(t,t_agg, by=c("lat","lon","name"))
+vars <- c("lat","lon","name")
+p_filt <- merge(precip,filt[1], by=c(vars))
+t_filt <- merge(temp, filt[2], by=c(vars))
+sorted <- p_filt[ order(p_filt[,1],p_filt[,2], p_filt[,6]),]
 ```
 
 
-  
-  
+```{r split by data points including NA values}
+years <- 59
+sorted_num <- sorted[,-3:-4]
+d <- split(sorted_num, (seq(nrow(p_filt))-1) %/% years)
+m <- as.matrix(d)
+l <- lapply(m, function(x) lm(data~year, data=x))
+slopes <- lapply(l, function(x) (x$coefficients["year"]))
+
 ```
