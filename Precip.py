@@ -8,6 +8,7 @@ Created on Tue Mar 13 15:51:37 2018
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import pandas
+import numpy as np
 
 # Import dataframe using pandas and remove first column of indices
 # Assign variables to proper names as lists "floats"
@@ -20,9 +21,10 @@ precip = df[2]
 df[2] = df[2].apply(str).str.replace('\(|\)','')
 precip = precip.tolist()
 
+s= sum(n < 0. for n in precip)
+
 # 1. Draw the map background
 pdat = precip
-
 
 buff = 0.5 #Edge buffer (degrees)
 xmn = lon.min() - buff # Create left boundary
