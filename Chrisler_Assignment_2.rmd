@@ -2,7 +2,11 @@
 title: "Chrisler_Assignment_2"
 author: "Brett Chrisler"
 date: "March 5, 2018"
-output: html_document
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+bibliography: Bibliography.xml
 ---
 
 ```{r, echo=FALSE}
@@ -19,8 +23,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r readRDS provided<-TRUE , echo=FALSE}
 #Import precipitation and temperature data
+if(provided <- TRUE){
 precip <- readRDS("USAAnnualPcpn1950_2008.rds")
 temp <- readRDS("USAAnnualTemp1950_2008.rds")
+fulldata <- readRDS("USAannualTemp1950_2016.rds")
+} else{
+fulldata <- dget("acis2dp.R")
+}
+
+
 ```
 
 ```{r, echo=FALSE}
@@ -29,6 +40,7 @@ library(data.table)
 # Use data.table package to create dataframes of each dataset
 dtp <- data.table(precip)
 dtt <- data.table(temp)
+dtfull <- data.table(fulldata)
 
 # List of dataframes to use in modularized code
 df.list <- list(dtp,dtt)
@@ -90,6 +102,15 @@ names(data_t) <- names(latlon_t)
 #identical(names(data_t),names(latlon_t))
 data_tf <- rbind(latlon_t, data_t)
 data_tf <- data_tf[-3,]
+
+#full data 
+#data_ft <- latlon[[2]]
+#latlon_ft <- data_ft[seq(1,length(data_ft),2)]
+#data_ft <- data_ft[seq(2,length(data_ft),2)]
+#names(data_ft) <- names(latlon_ft)
+#identical(names(data_ft),names(latlon_ft))
+#data_ft <- rbind(latlon_ft, data_ft)
+#data_ft <- data_ft[-3,]
 
 ```
 
@@ -163,58 +184,54 @@ write.csv(data_tf, file = "Temperatures.csv")
 # __Climate Study: Yearly Precipitation and Temperature Changes in the United States__
 
 ### I. Motivation
-Anthropogenic climate change has become an important issue as there has been a noticeable warming of overall global temperatures as greenhosue gas emissions have increased globally. While temperature is the focused on meterological variable in regards to anthropogenic climate change, others are impacted as well such as precipitation. Greenhosue gas emissions have been observed to suppress precipitation over tropical regions, as well as impacting the frequency of extreme weather events. While there is much uncertainty of the future impacts of anthropogenic climate change, the curent effects can be observed through analysis of weather station data throughout the past century. 
+Anthropogenic climate change has become an important issue as there has been a noticeable warming of overall global temperatures as greenhouse gas emissions have increased globally. While temperature is the focused on meteorological variable in regards to anthropogenic climate change, others are impacted as well such as precipitation. Greenhouse gas emissions have been observed to suppress precipitation over tropical regions [@Koren2010], affect mid-latitude cyclones [@Wang2014], as well as impacting the frequency and strength of extreme weather events such as tropical cyclones [@Rosenfeld2012]. While there is much uncertainty of the future impacts of anthropogenic climate change, the current effects can be observed through analysis of weather station data throughout the past century.
 <br>
 
 ### II. Data and Analysis
-Yearly average values of temperature and total precipitation values from 1950 - 2008 were available for analysis. The precipitation data focused on three states: Ohio, Tennessee, and Alabama, while the temperature data was collected across the entire United States. Only weather stations with at least forty years of data were analyzed as a threshhold for determining if there was enough data for a climatological study of a location. The values of these locations were statistically analyzed with linear regression to calculate the yearly change of each variable. These yearly changes were then projected onto maps. The yearly change in precipitation was projected to one regional map of the three states mentioned prior.  The yearly temperature changes were projected onto the entire United States, and then regional areas, Hawaii, and Alaska to visually see individua data clearly. 
+Yearly average values of temperature and total precipitation values from 1950 - 2008 were available for analysis. The precipitation data focused on three states: Ohio, Tennessee, and Alabama, while the temperature data was collected across the entire United States. Only weather stations with at least forty years of data were analyzed as a threshold for determining if there was enough data for a climatological study of a location. The values of these locations were statistically analyzed with linear regression to calculate the yearly change of each variable. These yearly changes were then projected onto maps. The yearly change in precipitation was projected to one regional map of the three states mentioned prior.  The yearly temperature changes were projected onto the entire United States, and then regional areas, Hawaii, and Alaska to visually see individual data clearly.
 <br>
 
 ### III. Results and Conclusions
 
-#### A. Yearly Precipitaiton Change
-Overall, ~83.9% or 224/267 locations in the three state analysis have observed an increase in yearly precipitation. Ohio contains the highest frequency of locations with yearly precipiation increases while Alabama and Tennessee seem to be more sporadic in nature. There does seem to be a concentrated region of little to declining yearly precipitation rates (indicated by blue to dark blue) in the eastern half of Tennessee and East Central Alabama. Results are comparable to the results from the National Climate Asessment with some differences observed in Tennessee. (https://nca2014.globalchange.gov/report/our-changing-climate/precipitation-change)
-<br>
+#### A. Yearly Precipitation Change
+Overall, ~83.9% or 224/267 locations in the three state analysis have observed an increase in yearly precipitation. Ohio contains the highest frequency of locations with yearly precipitation increases while Alabama and Tennessee seem to be more sporadic in nature. There does seem to be a concentrated region of little to declining yearly precipitation rates (indicated by blue to dark blue) in the eastern half of Tennessee and East Central Alabama. Results are comparable to the results from the National Climate Assessment with some differences observed in Tennessee. (https://nca2014.globalchange.gov/report/our-changing-climate/precipitation-change)
+
 
 #### B. Yearly Temperature Change
-Overall, ~71.2% or 2,227/3,200 locations in the United States analysis have observed an increase in yearly temperatures. The most signficiant impacts can be observed in the higher latitudes and western regions of the contiguous Untied States, as well as Alaska. A concentration of negative to neutral temperatue anomalies is observed in the South United States, which can be seen from the higher frequency of blue to dark blue on the regional map compared to other regions. 
+Overall, ~71.2% or 2,227/3,200 locations in the United States analysis have observed an increase in yearly temperatures. The most significant impacts can be observed in the higher latitudes and western regions of the contiguous United States, as well as Alaska. A concentration of negative to neutral temperature anomalies is observed in the South United States, which can be seen from the higher frequency of blue to dark blue on the regional map compared to other regions. 
 <br>
 
 #### C. Precipitation Maps
 ![](YearlyPrecipitationChange.jpg)
-<center>Figure 1: Yearly precipitation change (inches/year) for locations in Ohio, Tennessee, and Alabama.</center>
+<center>Figure 1: Yearly precipitation change in inches for locations in Ohio, Tennessee, and Alabama.</center>
 <br>
 
 #### D. Temperature Maps
 ![](YearlyTemperatureChange.jpg)
-<center>Figure 2: Yearly temperature change (degrees Farenheit/year) for the contiguous United States.</center>
+<center>Figure 2: Yearly temperature change in degrees Farenheit for the contiguous United States.</center>
 <br>
 
 ![](West.jpg)
-<center>Figure 3: Yearly temperature change (degrees Farenheit/year) for the West United States.</center> 
+<center>Figure 3: Yearly temperature change in degrees Farenheit for the West United States.</center> 
 <br>
 
 ![](Midwest.jpg)
-<center>Figure 4: Yearly temperature change (degrees Farenheit/year) for the Midwest United States.</center> 
+<center>Figure 4: Yearly temperature change in degrees Farenheit for the Midwest United States.</center> 
 <br>
 
 ![](South.jpg)
-<center>Figure 5: Yearly temperature change (degrees Farenheit/year) for the South United States.</center> 
+<center>Figure 5: Yearly temperature change in degrees Farenheit for the South United States.</center> 
 <br>
 ![](Northeast.jpg)
-<center>Figure 6: Yearly temperature change (degrees Farenheit/year) for the Northeast United States.</center> 
+<center>Figure 6: Yearly temperature change in degrees Farenheit for the Northeast United States.</center> 
 <br>
 
 ![](Alaska.jpg)
-<center>Figure 7: Yearly temperature change (degrees Farenheit/year) for Alaska.</center> 
+<center>Figure 7: Yearly temperature change in degrees Farenheit for Alaska.</center> 
 <br>
 
 ![](Hawaii.jpg)
-<center>Figure 8: Yearly temperature change (degrees Farenheit/year) for Hawaii.</center> 
+<center>Figure 8: Yearly temperature change in degrees Farenheit for Hawaii.</center> 
 <br>
 
-
-
-
-
-
+### IV. References

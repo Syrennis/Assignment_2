@@ -21,8 +21,6 @@ precip = df[2]
 df[2] = df[2].apply(str).str.replace('\(|\)','')
 precip = precip.tolist()
 
-s= sum(n < 0. for n in precip)
-
 # 1. Draw the map background
 pdat = precip
 
