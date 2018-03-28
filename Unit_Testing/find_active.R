@@ -13,8 +13,18 @@
 
 find_active<-function(ind, min)
 
-  data <- c()
-  for(i in seq_along(ind)){
-    data <- (ind >= min)
+
+ {  
+  dat<-c()
+
+  for(i in seq_along(ind))
+    {
+      if(ind >= min)
+    {
+      dat<-c(dat,ind)
+    }
+  }
+  
+  return(dat)
   }
 
