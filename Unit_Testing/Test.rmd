@@ -15,7 +15,7 @@ source("find_ocur.R")
 source("find_case.R")
 ```
 
-```{r cars}
+```{r test active}
 #If index is above 1 an active event is occuring. Return TRUE for active events.
 min <- 1
 ind <- c(0.3,0.5,0.2,0.6,1,1.2,1.5,0.3,0.5,0.9,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0.6)
@@ -28,7 +28,7 @@ if (length(h==11))
   print("failed")
 }
 ```
-```{r cars}
+```{r test occurence}
 #If index is above 1 an active event is occuring. Return TRUE for indices and pass if the amount of occurences is sufficient
 ind <-  c(0,0,0,0,1,1.2,1.5,0,0,0,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0)
 ocur <- 3
@@ -42,7 +42,7 @@ if (length(h)==3 && sum(h==c(1,2,8))==3)
 }
 ```
 
-```{r cars}
+```{r test case}
 #Use occurences to determine significant case studies (occuring over a long time)
 #which can be analyzed to find phases (location) of active MJO.
 case <- c(1,2,8)

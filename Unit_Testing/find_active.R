@@ -19,6 +19,6 @@ find_active <- function(ind, min)
     step2 <- ifelse(ind>=min, ind, 0)
     
     # save results and return
-    final <- step3
+    final <- step2
     return(final)
   }
