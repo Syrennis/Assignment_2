@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r find_fixed_source, echo=T}
 source("find_active.R")
 source("find_ocur.R")
-#source("find_case.R")
+source("find_case.R")
 ```
 
 ```{r cars}
@@ -47,8 +47,8 @@ if (length(h)==3 && sum(h==c(1,2,8))==3)
 #which can be analyzed to find phases (location) of active MJO.
 case <- c(1,2,8)
 ocurmin <- 3
-h <- find_case.r(case,ocurmin)
-if (length(h[h==TRUE])==6) 
+h <- find_case(case,ocurmin)
+if (length(h==1))
 {
   print("passed")
 } else

@@ -1,8 +1,7 @@
-#Gives active MJO events from a list of indices find the length of days it occurs for each event, ocur
+#Gives active MJO events from a list of indices find the length of days it occurs for each event.
 #
 #Args
-#days     A list of days
-#ocur     Amount of occurences to define an active MJO
+#ind      A list of indices from MJO filtered dataset 
 #
 #Output
 #A vector with the amount of days each event lasts
