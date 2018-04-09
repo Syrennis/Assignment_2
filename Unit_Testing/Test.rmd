@@ -12,15 +12,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r find_fixed_source, echo=T}
 source("find_active.R")
 source("find_ocur.R")
-source("find_case.R")
+#source("find_case.R")
 ```
 
 ```{r cars}
 #If index is above 1 an active event is occuring. Return TRUE for active events.
 min <- 1
 ind <- c(0.3,0.5,0.2,0.6,1,1.2,1.5,0.3,0.5,0.9,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0.6)
-h <- find_active.R(ind, min)
-if (length(h[h==TRUE])==11) 
+h <- find_active(ind, min)
+if (length(h==11))
 {
   print("passed")
 } else
@@ -30,11 +30,10 @@ if (length(h[h==TRUE])==11)
 ```
 ```{r cars}
 #If index is above 1 an active event is occuring. Return TRUE for indices and pass if the amount of occurences is sufficient
-min <- 1
-ind <- c(0.3,0.5,0.2,0.6,1,1.2,1.5,0.3,0.5,0.9,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0.6)
+ind <-  c(0,0,0,0,1,1.2,1.5,0,0,0,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0)
 ocur <- 3
-h <- find_ocur.R(ind, min, ocur)
-if (sum(h[5:7]==TRUE)>=3 && sum(h[11:18]==TRUE)>=8)
+h <- find_ocur(ind)
+if (length(h)==3 && sum(h==c(1,2,8))==3)
 {
   print("passed")
 } else
