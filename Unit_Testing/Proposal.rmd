@@ -2,13 +2,11 @@
 title: "Proposal"
 author: "Brett Chrisler"
 date: "April 9, 2018"
-output: html_document
+output:
+  html_document:
+    df_print: paged
+bibliography: Bibliography.xml
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 
 # __Comparing Indices: Madden-Julian Oscillation and Termination__
 
@@ -20,5 +18,7 @@ Comparing these indices to see how they do well with recognizing the active mode
 
 ### II. Data and Analysis
 Multiple indcies exist for the Madden-Julian Oscillation with the most used being the Real-time Multivariate MJO (RMM) index. This index uses both OLR and zonal winds to calcuate the principal components and amplitude of the MJO. Additional indices include the following: the OLR MJO Index, OMI, the Original OLR MJO Index, OOMI, the Real-time OLR MJO Index, RMP, the Filtered OLR MJO index, FMO, and the Velocity Potential MJO index, VPM. OMI, OOMI, RMO, and FMO are univariate and use OLR data, while the VPM is multivariate like the RMM but instead used 200 hPa velocity potentional instead of OLR. 
+<br>
 
-### III. Results and Conclusions
+### III. Expected Results
+Results should at least be consistent among filters using similar methods, such as all OLR univariate indices should return similar results. Variations may occur due to different filtering among the indices. If multivariate results return similar results to the univariate ones, then it should indicate that the additional parameter is not necessarily important for maintaining an MJO event. Additionally, the length of an event will be a good indicator if a certain index is picking up on a known case study event.
