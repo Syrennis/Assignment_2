@@ -3,10 +3,30 @@ title: "Proposal"
 author: "Brett Chrisler"
 date: "April 9, 2018"
 output:
+  word_document: default
+  pdf_document: default
   html_document:
     df_print: paged
 bibliography: Bibliography.xml
 ---
+
+```{r find_fixed_source, echo=F}
+source("find_active.R")
+source("find_ocur.R")
+source("find_case.R")
+```
+
+```{r test active, echo=F}
+#install.packages("xtable")
+data <-read.csv("RMM.csv")
+ind <- as.numeric(data$amplitude)
+min = 1
+ocur <- 30
+h <- find_active(ind,min)
+case <- as.matrix(find_ocur(h))
+final <- as.matrix(find_case(case,ocur))
+
+```
 
 # __Comparing Indices: Madden-Julian Oscillation and Termination__
 
@@ -20,5 +40,16 @@ Comparing these indices to see how they do well with recognizing the active mode
 Multiple indcies exist for the Madden-Julian Oscillation with the most used being the Real-time Multivariate MJO (RMM) index. This index uses both OLR and zonal winds to calcuate the principal components and amplitude of the MJO. Additional indices include the following: the OLR MJO Index, OMI, the Original OLR MJO Index, OOMI, the Real-time OLR MJO Index, RMP, the Filtered OLR MJO index, FMO, and the Velocity Potential MJO index, VPM. OMI, OOMI, RMO, and FMO are univariate and use OLR data, while the VPM is multivariate like the RMM but instead used 200 hPa velocity potentional instead of OLR. 
 <br>
 
-### III. Expected Results
+### III. Preliminary and Expected Results
+Preliminary results that were calculated included the amount of events based off any days of amplitude greater than unity, the amount of days of amplitude above unity, and the amount of major events meaning maintaining longer than 30 days.
+
+```{r xtable, echo=F}
+library(xtable)
+Category <-c("Amount of Active Modes", "Amount of Days of Active Modes", "Amount of Major Events (>30 days)")
+Amount  <- c(length(case),sum(case),length(final))
+tableinfo <- data.frame(Category, Amount)
+xtable(tableinfo)
+```
+
+
 Results should at least be consistent among filters using similar methods, such as all OLR univariate indices should return similar results. Variations may occur due to different filtering among the indices. If multivariate results return similar results to the univariate ones, then it should indicate that the additional parameter is not necessarily important for maintaining an MJO event. Additionally, the length of an event will be a good indicator if a certain index is picking up on a known case study event.
