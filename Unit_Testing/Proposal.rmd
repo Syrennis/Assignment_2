@@ -4,9 +4,9 @@ author: "Brett Chrisler"
 date: "April 9, 2018"
 output:
   word_document: default
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 bibliography: Bibliography.xml
 ---
 
