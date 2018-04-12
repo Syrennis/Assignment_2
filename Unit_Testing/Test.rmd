@@ -7,6 +7,13 @@ output:
   html_document: default
 ---
 
+<!--***DAN: Search ***DAN in all docs to find my comments-->
+
+<!--***DAN: When I knitted this on linux it worked, and appeared as an open office doc, so nice to see the Word knit option works on linux!-->
+
+<!--***DAN: Your unit testing framework is as requested, so well done on that. My one complaint, other than
+function-specific comments you will find in various places is the git tag "halfway" was not at the right place in your git revision history. However, I was able to find the sha that did correspond to the pont where you had writen your function specs (but no functions) and your tests, so that's fine. You can retroactively add a tag by using git checkout <sha> and then establishing tag from there with git tag in the event you forgot to do it at the time. You have to figure out what <sha> is though, which I did with gitk.-->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -17,6 +24,7 @@ source("find_ocur.R")
 source("find_case.R")
 ```
 
+<!--***DAN: Seems like this test could have been more excting if it tested for which speciic inidces were found instead of just how many. But maybe not necessary because it is a simple function.-->
 ```{r test active}
 #If index is above 1 an active event is occurring. Returns index for active mode/event and zero for non-active.
 min <- 1
@@ -30,6 +38,8 @@ if (length(h==11))
   print("failed")
 }
 ```
+
+<!--***DAN: I recommend using chunk names (and variable names, file names, etc.) without spaces. Spaces cause all sorts of problems, though it seems to have worked here.-->
 ```{r test occurence}
 #If index is above 1 an active event is occuring. Returns number of consecutive days that the event is occurring.
 ind <-  c(0,0,0,0,1,1.2,1.5,0,0,0,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0)

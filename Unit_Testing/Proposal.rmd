@@ -10,10 +10,28 @@ output:
 bibliography: Bibliography.xml
 ---
 
+<!--***DAN: Search ***DAN in all docs to find my comments-->
+
+<!--***DAN: The proposal: There are various distracting typos and gramatical errors. The proposal is basically fine to get you started, but it is pretty non-explicit in what you will actually do/calculate, and it is also somewhat limited in what you seem to directly have in mind. You need to specify some secific research questions and hypotheses. Just counting MJO events and major events is a minimal project and I suggets you formulate a concrete plan for how to go beyond that. We spoke about spectral analyses but none of that is in there. Whereas if you just do what you have proposed, you will probably do fine, grade-wise, you can do much better than that and it will help you learn if you do. The place to start is scientific questions.-->
+
+<!--***DAN: Overall, this meets the criteria of an effort-full attempt at all parts of the assignment. 10/10.-->
+
+
 ```{r find_fixed_source, echo=F}
 source("find_active.R")
 source("find_ocur.R")
 source("find_case.R")
+```
+
+<!--***DAN: When I tried to knit, it did not work, the first error I got was missing packages which were not installed on my machine. Rather than go through and install packages, I put the below chunk in, which will find and install the 2018-03-29 version (you can change that date) of all packages you use in a local folder (called .checkpoint, I told the machine to put it in the repo root directory, but of course it will not be tracked by git unless you add it, and you should not). I have found that to be a good place to put it because that is the one directory location that you know will exist on other people's machines. For some reason it still did not work, and it indicted the problem was with the xtable package. Apparently it was failing to find that you had made a call to library(xtable) below. When I added library(xtable) here it worked and knitted. This checkpoint business can improve portability of your code by installing packages for you on other people's machnes, in addition to making the analysis reproducible through time even if the packages are changed. I hope this helps.  
+<!--checkpoint package-->
+```{r checkpoint_chunk, echo=F, warning=F, message=F, results="hide"}
+library(checkpoint)
+library(xtable)
+if (!dir.exists("./.checkpoint/")){
+  dir.create("./.checkpoint/")
+}
+checkpoint("2018-03-29",checkpointLocation = "./")
 ```
 
 ```{r test active, echo=F}
