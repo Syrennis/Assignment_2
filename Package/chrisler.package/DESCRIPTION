@@ -3,7 +3,7 @@ Type: Package
 Title: MJO Package
 Version: 0.1.0
 Author: Brett Chrisler
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: bchrisler@ku.edu
 Description: Contains three functions to find active MJO events, length of events in days, and filter longer events for case studies.
 License: NA
 Encoding: UTF-8
