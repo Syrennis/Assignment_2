@@ -1,0 +1,54 @@
+---
+title: "Test"
+author: "Brett Chrisler"
+date: "March 28, 2018"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r test active}
+#If index is above 1 an active event is occurring. Returns index for active mode/event and zero for non-active.
+min <- 1
+ind <- c(0.3,0.5,0.2,0.6,1,1.2,1.5,0.3,0.5,0.9,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0.6)
+h <- find_active(ind, min)
+if (length(h==11))
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+```{r test occurence}
+#If index is above 1 an active event is occuring. Returns number of consecutive days that the event is occurring.
+ind <-  c(0,0,0,0,1,1.2,1.5,0,0,0,1.2,1.5,1.6,1.9,2.0,2.1,1.7,1.3,0)
+ocur <- 3
+h <- find_ocur(ind)
+if (length(h)==3 && sum(h==c(1,2,8))==3)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+```{r test case}
+#Use length of an event and determines which events meet the criteria of an event that can be analyzed and compared to a case study
+case <- c(1,2,8)
+ocurmin <- 3
+h <- find_case(case,ocurmin)
+if (length(h==1))
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
