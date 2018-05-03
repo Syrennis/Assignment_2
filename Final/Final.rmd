@@ -5,17 +5,23 @@ date: "April 24, 2018"
 output:
   html_document: default
   word_document: default
+bibliography: Bibliography.xml
 ---
+```{r, echo = FALSE}
+#Run Python scripts through bash or outside RStudio and the
+#proper csv and png files will be exported to the current directory
+```
 
-```{r}
+```{r, echo = FALSE}
 # Python scripts created to calculate phases based off indices
-# and their principal components
+# and their principal components (Some computers don't run reticulate well)
 #install.packages("reticulate")
-library(reticulate)
-source_python("VPM.py")
-source_python("OMI.py")
-source_python("FMO.py")
-source_python("RMM.py")
+#library(reticulate)
+#source_python("VPM.py")
+#source_python("OMI.py")
+#source_python("FMO.py")
+#source_python("RMM.py")
+library(knitr)
 ```
 
 # __Comparing Indices: Madden-Julian Oscillation and Termination__
@@ -27,33 +33,71 @@ Comparing these indices to see how they do well with recognizing the active mode
 <br>
 
 ### II. Data and Analysis
-Multiple indcies exist for the Madden-Julian Oscillation with the most used being the Real-time Multivariate MJO (RMM) index. This index uses both OLR and zonal winds to calcuate the principal components and amplitude of the MJO. Additional indices include the following: the OLR MJO Index, OMI, the Filtered OLR MJO index, FMO, and the Velocity Potential MJO index, VPM. OMI and FMO are univariate and use OLR data, while the VPM is multivariate like the RMM but instead used 200 hPa velocity potential instead of OLR. All indies were obtained from the Earth System Research Laboratory (ESRL).
+Multiple indices exist for the Madden-Julian Oscillation with the most used being the Real-time Multivariate MJO (RMM) index. This index uses both OLR and zonal winds to calculate the principal components and amplitude of the MJO. Additional indices include the following: the OLR MJO Index, OMI, the Filtered OLR MJO index, FMO, and the Velocity Potential MJO index, VPM. OMI and FMO are univariate and use OLR data, while the VPM is multivariate like the RMM but instead used 200 hPa velocity potential instead of OLR. All indices were obtained from the Earth System Research Laboratory (ESRL).
 
-Each index calculates the first two leading empirical orthogonal functions or principal components and uses these to calculate the amplitude oft the MJO. When the amplitude becomes unity or greater, an active MJO event is occuring. Additionally, the eastward propagation of the MJO is tracked in eight phases. The eight phases indicate the location of the event. The RMM data already provides the phase, but the other indices require conversion from the RMM principal components to calculate the phase of the MJO. 
+Each index calculates the first two leading empirical orthogonal functions or principal components and uses these to calculate the amplitude of the MJO. When the amplitude becomes unity or greater, an active MJO event is occurring. Additionally, the eastward propagation of the MJO is tracked in eight phases. The eight phases indicate the location of the event. The RMM data already provides the phase, but the other indices require conversion from the RMM principal components to calculate the phase of the MJO.
 
-The analysis conducted includes the following: finding all days of active phase, separating each active phase into indiidual events, calculating the phase for every day of data, and finding the terminating phase of each event. A histogram is then created for each index for a visual of terminating phases for an easy comparison between each index.
+The analysis conducted includes the following: finding all days of active phase, separating each active phase into individual events, calculating the phase for every day of data, and finding the terminating phase of each event. A histogram is then created for each index for a visual of terminating phases for an easy comparison between each index.
+
+
+<br>
+![](http://www.cpc.noaa.gov/products/precip/CWlink/MJO/plot_olr_tvalue_8pan_maysep.gif)
+</center>
+</br>
+
+<center>Figure 1. Outgoing longwave radiation during all phases of the Madden-Julian Oscillation, where phases refer to different locations during the cycle of the MJO. [@CPC2017]<center/>
+
+
+### III. Results and Conclusions
+Analyzing the results there seems to be a noticeable difference between the univariate and multivariate indices. The FMO and OMI both have a local minimum of termination in phase 5 and a local maximum in phase 3. This is expected as both indices only use outgoing longwave radiation as the variable, and therefore should have similar results in termination. Another noticeable difference is that phases 7 and 8 seem to be flipped. As for the RMM and VPM, there is significantly less variability than the FMO and OMI indices. The VPM tended to be more symmetric in phases than the RMM, where the RMM had definite local minimums in phases 3 and 7.
+
+Overall, the results are promising for several reasons. First, again, there is correlation between indices that are univariate and multivariate. Next, since OMI, FMO, and RMM all use outgoing longwave radiation as a parameter, there is an indication that zonal winds are a parameter are significant. If they were not, then the RMM would have had similar results to both the OMI and FMO. Lastly, the VPM's symmetric shape in values indicates that velocity potential may also be a significant parameter to investigate as there were noticeable differences compared to the RMM.
+
+
 <br>
 
-### Results
-
-```{r xtable, echo=T}
+```{r xtable, echo=F}
 library(xtable)
-VPM <- VPMcount
-RMM <- RMMcount
-OMI <- OMIcount
-FMO <- FMOcount
+VPM <- read.csv(file="VPMcount.csv", header=TRUE, sep=",")
+RMM <- read.csv(file="RMMcount.csv", header=TRUE, sep=",")
+OMI <- read.csv(file="OMIcount.csv", header=TRUE, sep=",")
+FMO <- read.csv(file="FMOcount.csv", header=TRUE, sep=",")
 
-print(xtable(RMM), digits = c(0,0,0), include.rownames = FALSE)
-print(xtable(VPM), digits = c(0,0,0), include.rownames = FALSE)
-print(xtable(OMI), digits = c(0,0,0), include.rownames = FALSE)
-print(xtable(FMO), digits = c(0,0,0), include.rownames = FALSE)
+RMMtable <- xtable(RMM, digits = c(0,0,0), include.rownames = FALSE)
+VPMtable <- xtable(VPM, digits = c(0,0,0), include.rownames = FALSE)
+OMItable <- xtable(OMI, digits = c(0,0,0), include.rownames = FALSE)
+FMOtable <- xtable(FMO, digits = c(0,0,0), include.rownames = FALSE)
 ```
 
-![optional caption text](RMM.png)
+```{r RMM table, results="asis", echo=F}
+print(RMMtable, type="html")
+```
+<p>
+Table 1: Terminating phases frequencies for RMM index
+<p>
+```{r VPM table, results="asis", echo=F}
+print(VPMtable, type="html")
+```
+<p>
+Table 2: Terminating phases frequencies for VPM index
+<p>
+```{r OMI table, results="asis", echo=F}
+print(OMItable, type="html")
+```
+<p>
+Table 3: Terminating phases frequencies for OMI index
+<p>
+```{r FMO table, results="asis", echo=F}
+print(FMOtable, type="html")
+```
+<p>
+Table 4: Terminating phases frequencies for FMO index
+<p>
+![Figure 2: Histogram of terminating phases frequencies for RMM index](RMM.png)
 
-![optional caption text](VPM.png)
+![Figure 3: Histogram of terminating phases frequencies for VPM index](VPM.png)
 
-![optional caption text](OMI.png)
+![Figure 4: Histogram of terminating phases frequencies for OMI index](OMI.png)
 
-![optional caption text](FMO.png)
+![Figure 5: Histogram of terminating phases frequencies for FMO index](FMO.png)
 
