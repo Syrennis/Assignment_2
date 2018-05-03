@@ -78,6 +78,9 @@ OMIcounter = list(collections.Counter(TerminationOMI).items())
 OMIcount = pandas.DataFrame(OMIcounter)
 OMIcount = OMIcount.rename(columns={0:"Phase", 1:"Frequency"})
 OMIcount = OMIcount.sort_values(by=["Phase"])
+df = OMIcount
+
+df.to_csv("OMIcount.csv", encoding='utf-8', index=False)
     
 #Plot hustogram of frequency of terminating phases
 x = TerminationOMI

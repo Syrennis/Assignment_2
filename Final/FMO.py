@@ -78,6 +78,9 @@ FMOcounter = list(collections.Counter(TerminationFMO).items())
 FMOcount = pandas.DataFrame(FMOcounter)
 FMOcount = FMOcount.rename(columns={0:"Phase", 1:"Frequency"})
 FMOcount = FMOcount.sort_values(by=["Phase"])
+df = FMOcount
+
+df.to_csv("FMOcount.csv", encoding='utf-8', index=False)
 
 #Plot hustogram of frequency of terminating phases
 x = TerminationFMO

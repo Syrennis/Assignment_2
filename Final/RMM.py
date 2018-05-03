@@ -45,6 +45,9 @@ RMMcounter = list(collections.Counter(TerminationRMM).items())
 RMMcount = pandas.DataFrame(RMMcounter)
 RMMcount = RMMcount.rename(columns={0:"Phase", 1:"Frequency"})
 RMMcount = RMMcount.sort_values(by=["Phase"])
+df = RMMcount
+
+df.to_csv("RMMcount.csv", encoding='utf-8', index=False)
 
 #Plot hustogram of frequency of terminating phases
 x = TerminationRMM

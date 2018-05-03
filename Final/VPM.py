@@ -11,6 +11,8 @@ import pandas
 from itertools import groupby, count
 from operator import itemgetter
 import collections
+import tables
+import csv
 
 #Read in data for VPM indices
 a = pandas.read_csv('VPM_indices.csv', header = 0)
@@ -80,6 +82,9 @@ VPMcounter = list(collections.Counter(TerminationVPM).items())
 VPMcount = pandas.DataFrame(VPMcounter)
 VPMcount = VPMcount.rename(columns={0:"Phase", 1:"Frequency"})
 VPMcount = VPMcount.sort_values(by=["Phase"])
+df = VPMcount
+
+df.to_csv("VPMcount.csv", encoding='utf-8', index=False)
 
 #Plot hustogram of frequency of terminating phases
 y = np.array(TerminationVPM)
