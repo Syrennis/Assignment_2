@@ -1,0 +1,59 @@
+---
+title: "Final"
+author: "Brett Chrisler"
+date: "April 24, 2018"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r}
+# Python scripts created to calculate phases based off indices
+# and their principal components
+#install.packages("reticulate")
+library(reticulate)
+source_python("VPM.py")
+source_python("OMI.py")
+source_python("FMO.py")
+source_python("RMM.py")
+```
+
+# __Comparing Indices: Madden-Julian Oscillation and Termination__
+
+### I. Motivation
+The Madden - Julian Oscillation (MJO) is a large-scale circulation that is occasionally coupled with convection. The MJO propagates eastward at around 5 m/s and has an intraseasonal lifespan of 30 - 90 days. The MJO most often begins in the Indian Ocean and ends in the Western Pacific; however, location can vary immensely and is divided into eight phases. There are two modes of the MJO which are active and inactive. During the active mode, strong convection prevails and higher precipitation amounts are observed, while the inactive mode. To analyze the length of an active mode, indices are created to set a threshold of when the MJO is either mode [@Zhang2005].
+
+Comparing these indices to see how they do well with recognizing the active mode, as well as when an event is terminated is crucial for the study of the Madden-Julian Oscillation. The birth and decay of the MJO is still unknown and comparing indices could shine light on what precursor conditions allow for the MJO to maintain itself. As the MJO has widespread impacts on global climate, understanding this phenomena is important especially in regards to global climate models (GCMs).
+<br>
+
+### II. Data and Analysis
+Multiple indcies exist for the Madden-Julian Oscillation with the most used being the Real-time Multivariate MJO (RMM) index. This index uses both OLR and zonal winds to calcuate the principal components and amplitude of the MJO. Additional indices include the following: the OLR MJO Index, OMI, the Filtered OLR MJO index, FMO, and the Velocity Potential MJO index, VPM. OMI and FMO are univariate and use OLR data, while the VPM is multivariate like the RMM but instead used 200 hPa velocity potential instead of OLR. All indies were obtained from the Earth System Research Laboratory (ESRL).
+
+Each index calculates the first two leading empirical orthogonal functions or principal components and uses these to calculate the amplitude oft the MJO. When the amplitude becomes unity or greater, an active MJO event is occuring. Additionally, the eastward propagation of the MJO is tracked in eight phases. The eight phases indicate the location of the event. The RMM data already provides the phase, but the other indices require conversion from the RMM principal components to calculate the phase of the MJO. 
+
+The analysis conducted includes the following: finding all days of active phase, separating each active phase into indiidual events, calculating the phase for every day of data, and finding the terminating phase of each event. A histogram is then created for each index for a visual of terminating phases for an easy comparison between each index.
+<br>
+
+### Results
+
+```{r xtable, echo=T}
+library(xtable)
+VPM <- VPMcount
+RMM <- RMMcount
+OMI <- OMIcount
+FMO <- FMOcount
+
+print(xtable(RMM), digits = c(0,0,0), include.rownames = FALSE)
+print(xtable(VPM), digits = c(0,0,0), include.rownames = FALSE)
+print(xtable(OMI), digits = c(0,0,0), include.rownames = FALSE)
+print(xtable(FMO), digits = c(0,0,0), include.rownames = FALSE)
+```
+
+![optional caption text](RMM.png)
+
+![optional caption text](VPM.png)
+
+![optional caption text](OMI.png)
+
+![optional caption text](FMO.png)
+
